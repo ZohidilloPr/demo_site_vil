@@ -1,0 +1,156 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Tumanlar
+{% endblock %}
+{% block content %}
+    <div class="background">
+        {% include "../widgets/sidebar.html" %}
+        <div class="main">
+            <ul class="fl-top">
+                <li class="">
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle w-100 rounded-0 border-dark border-top-0 border-start-0 border-end-0" href="{% url 'AD' %}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Tuman va Shahar
+                        </a>
+                        <ol class="dropdown-menu w-100">
+                            {% for i in all_d %}
+                            <li><a class="dropdown-item a-link" href="">{{ i }}</a></li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a class="btn dropdown-toggle w-100 rounded-0 border-0" href="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Maktablar
+                        </a>
+                        <ol class="dropdown-menu w-100">
+                            {% for i in maktab %}
+                            <li><a class="dropdown-item a-link" href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </li>        
+                <li>
+                    <a href="{% url 'AKB' pk=d.pk %}" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">kollej</a>
+                </li>        
+                <li>
+                    <a href="{% url 'AOB' pk=d.pk %}" style="padding: 7px 0;" class="btn rounded-0 w-100 border-0">OTM</a>
+                </li>        
+            </ul>
+            <div class="chart mt-5">
+                <h1>Bu yilgi bitiruvchilar {{ d }} misolida</h1>
+                <canvas id="tumanChart"></canvas>
+            </div>
+            <br>
+            <div class="jadval my-5">
+                <table class="table table-gray ">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>№</th>
+                            <th>F.I.SH</th> 
+                            <th>Yashash manzili</th>
+                            <th>Ta'lim Muassasasi nomi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in object_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
+                                <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                {% if i.maktabbitiruvchisi %}
+                                    <td> {{ i.maktabbitiruvchisi.maktab }}</td>
+                                {% elif i.kollejbitiruvchisi.kollej %}
+                                    <td> {{ i.kollejbitiruvchisi.kollej }}</td>
+                                {% elif i.kollejbitiruvchisi.kolleJ %}
+                                    <td> {{ i.kollejbitiruvchisi.kolleJ }}</td>
+                                {% elif i.universitetbitiruvchisi.universitet %}    
+                                    <td> {{ i.universitetbitiruvchisi.universitet }}</td>    
+                                {% else %}
+                                <td> {{ i.universitetbitiruvchisi.universiteT }}</td>    
+                                {% endif %}    
+                            </tr> 
+                        {% empty %}
+                            <tr>
+                                <th>Hozirda talabalar yoq! Malumotlarni to'ldirish kerak <a href="{% url 'MBA' %}">link</a></th>
+                            </tr> 
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if object_list.has_other_pages %}
+            <nav class="notShadow py-4 my-3">
+                <ul class="pagination justify-content-center">
+                    {% if object_list.has_previous %}                      
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ object_list.previous_page_number }}">Ortga</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="">Ortga</a>
+                        </li>
+                    {% endif %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">Birinchi sahifa</a>
+                    </li>
+            
+                    {% if object_list.number|add:'-1' > 1 %}
+                        <li class="page-item disabled"><a class="page-link">&hellip;</a></li>
+                    {% endif %}
+            
+                    {% for i in object_list.paginator.page_range %}
+                        {% if object_list.number == i %}
+                            <li class="active page-item disabled"><a class="page-link" href="#">{{ i }}</a></li>
+                        {% elif i > object_list.number|add:'-2' and i < object_list.number|add:'2' %}
+                            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+            
+                    {% if object_list.paginator.num_pages > object_list.number|add:'1' %}
+                        <li class="page-item disabled"><a class="page-link" href="#">&hellip;</a></li>
+                    {% endif %}
+            
+                    <li class="page-item {% if not object_list.has_next %} disabled {% endif %}">
+                        <a class="page-link" href="?page={{ object_list.next_page_number }}">Keyingi</a>
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
+        </div>
+    </div>
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script>
+        const tuman = document.getElementById("tumanChart").getContext("2d");
+        const tumanChart = new Chart(tuman, {
+            type: 'bar',
+            data: {
+                labels : ['OTM bitiruvchilari', 'Professional ta\'lim bitiruvchilari', 'Maktab bitiruvchilari'],
+                datasets : [{
+                    label: '',
+                    data: ['{{ unb }}', '{{ kjb }}', '{{ mkb }}'],
+                    backgroundColor: [
+                        'rgba(5, 140, 145, 0.47)',
+                        'rgba(9, 57, 142, 0.45)',
+                        'rgba(8, 140, 78, 0.5)',
+                    ],
+                    // borderColor: [
+                    //     'rgba(5, 140, 145, 1)',
+                    //     'rgba(9, 57, 142, 1)',
+                    //     'rgba(8, 140, 78, 1)',
+                    // ],
+                    // borderWidth: 1,
+                    hoverOffset: 10,
+                }]
+            },
+            options: {
+                scales:{
+                    y:{
+                        beginAtZone :true
+                    }
+                }
+            }
+        })
+    </script>
+{% endblock %}

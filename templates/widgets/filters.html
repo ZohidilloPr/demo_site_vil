@@ -1,0 +1,17 @@
+{% load widget_tweaks %}
+
+<div class="my-4 bg-shadow-a bg-light">
+    <form action="" method="get" novalidate class="indexFilter">
+        <div class="input-group input-group-sm">
+            <label for="id_tuman" class="input-group-text">Tuman&Shahar</label>
+            {{ mkFil.form.tuman|add_class:"form-select" }}
+            <label for="id_mahalla" class="input-group-text ms-3">Mahalla</label>
+            {{ mkFil.form.mahalla|add_class:"form-select" }}
+            <label for="id_maktabbitiruvchisi__maktab" class="input-group-text ms-3">Maktab №</label>
+            {{ mkFil.form.maktab|add_class:"form-select"}}
+            <label for="id_maktabbitiruvchisi__sinf" class="input-group-text ms-3">Sinf №</label>
+            {{ mkFil.form.sinf|add_class:"form-select"}} <br><br>
+            <input type="submit" value="Qidirish" class="mx-3 btn btn-outline-dark  btn-sm">
+        </div>
+    </form>
+</div>

@@ -1,0 +1,324 @@
+body{
+    overflow-x: hidden;
+}
+.hidden-over{
+    overflow-y: hidden;
+}
+nav{
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+body::-webkit-scrollbar{
+    display: none;
+}
+a{
+    text-decoration: none;
+}
+.top-nav li{
+    margin-right: 25px;
+}
+/* .top-nav li a:hover, .active-nav{
+    color: #3F4C5C;
+    text-decoration: underline;
+} */
+.top-nav li:nth-child(1) a{
+    color: darkcyan;
+    border-color: darkcyan;
+}
+.top-nav li:nth-child(1) a:hover{
+    color: white;
+    text-decoration: none;
+    background-color: darkcyan;
+}
+.table-box{
+    height: 500px;
+    overflow-x: hidden;
+    position: relative;
+    scrollbar-width: none;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+
+}
+.table-box::-webkit-scrollbar{
+    display: none;
+}
+table thead{
+    top: 0%;
+    position: sticky;
+    color: aliceblue;
+    background-color: darkcyan;
+}
+table tbody{
+    background: linear-gradient(rgba(250, 250, 250, 0.5), rgba(250, 250, 250, 0.9));
+}
+table tbody tr td a{
+    color: darkcyan;
+    text-decoration: none;
+}
+table tbody tr td a:hover, .active-td{
+    color: darkcyan;
+    text-decoration: underline;
+}
+thead tr th{
+    font-weight: 450;
+}
+.img-name{
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+}
+.img{
+    width: 25%;
+    height: 80vh;
+}
+.name{
+    width: 75%;
+    padding-left: 20px;
+}
+.ism{
+    font-size: 60px;
+    color: cadetblue;
+    font-family: fantasy;
+}
+.info-data h3{
+    width: 300px;
+    font-family: serif;
+    border-bottom: 2px solid cadetblue;
+}
+.imkonyat h3{
+    font-size: 25px;
+    font-family: serif;
+}
+.background, .background-table, .data-bg{
+    height: auto;
+    padding: 50px 0;
+    scrollbar-width: none;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-image: url("https://img.freepik.com/premium-vector/white-abstract-background-in-3d-paper-style_23-2148403778.jpg?w=2000");
+    /* background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(0,0, 0, 0.4)), url(""); */
+}
+.data-bg{
+    height: 100vh;
+}
+.background-table{
+    height: 100vh;
+    background-image: url("https://catherineasquithgallery.com/uploads/posts/2021-03/1614603227_28-p-fon-dlya-prezentatsii-s-belim-fonom-33.png");
+}
+#sidebar{
+    top: 0;
+    left: 0;
+    width: 20%;
+    height: 100vh;
+    position: fixed;
+    background-color: #3F4C5C;
+}
+#bar{
+    padding: 30px;
+    margin-top: 70px;
+}
+#bar ul li, .dw .drp{
+    margin-bottom: 25px;
+    list-style-type: none;
+}
+#bar ul li a, .dw .drp{
+    display: block;
+    width: 70%;
+    color: white;
+    transition: 1s;
+    padding: 5px 20px;
+    text-decoration: none;
+    border: 1px solid white;
+}
+#bar ul li ol li a, .tm li a{
+    border: none;
+}
+
+#bar ul li a:hover, .active-sidebar:visited, .active-sidebar{
+    color: black !important;
+    background-color: white !important;
+}
+#bar ul li:nth-child(5) a:hover{
+    color: white !important;
+    background-color: rgba(151, 28, 28, 0.781) !important;
+}
+.main{
+    width: 70%;
+    margin-left: 25%;
+}
+.main .chart{
+    /* margin-top: 25px; */
+    text-align: center;
+    animation-name: chart;
+    animation-duration: 2s;
+    animation-direction: alternate;
+    /* border: 1px solid darkcyan; */
+}
+.chart{
+    width: 100%;
+    height: 80vh;
+    margin: auto;
+    /* height: 50vh; */
+}
+.main .chart img{
+    width: 1000px;
+    height: 600px;
+    transition: 1s ease-in;
+    border: 1px solid #3F4C5C;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+
+}
+@keyframes chart {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+.main .chart h1{
+    padding: 20px 0;
+    font-size: 40px;
+    color: #3F4C5C;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+/* .tumanlar{
+    padding-top: 50px;
+} */
+.tumanlar h1{
+    padding: 20px;
+    font-size: 45px;
+    color: #3F4C5C;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.tumanlar ul {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+}
+.tumanlar #data{
+    display: inline-flex;
+}
+#data li{
+    margin-right: 45px;
+}
+.tumanlar ul li{
+    margin-top: 25px;
+    list-style-type: none;
+    
+}
+.tumanlar ul li a{
+    width: 200px;
+    height: 200px;
+    display: flex;
+    padding: 10px;
+    border-radius: 15px;
+    transition: 0.5s;
+    color: aliceblue;
+    text-align: center;
+    align-items: center;
+    word-wrap: break-word;
+    text-decoration: none;
+    justify-content: center;
+    background-color: #3F4C5C;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.tumanlar ul li a:hover{
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+.jadval{
+    height: 500px;
+    position: relative;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+
+}
+.bg-shadow-a{
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+.jadval::-webkit-scrollbar{
+    display: none;
+}
+.table-gray, .table-gray tr{
+    color: white;
+    background-color: #3F4C5C;
+}
+
+/* users sections */
+
+.mn{
+    width: 100%;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.bg-fon{
+    width: 75%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-image: url("https://cdn.newswire.com/files/x/d9/c4/0f4be68db865a39175229f5442c5.jpg");
+}
+.center-page{
+    left: 75%;
+    width: 25%;
+    height: 100vh;
+    padding: 50px;
+    display: inline-flex;
+    background-color: #3F4C5C;
+    justify-content: space-between;
+    /* border: 1px solid red; */
+}
+.user-form{
+    width: 100%;
+}
+.user-form form input, .user-form form label{
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+    outline: none;
+    display: block;
+    margin-bottom: 15px;
+    
+}
+.user-form form input{
+    border: 1px solid white;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+.user-form form label{
+    color: white;
+    margin-bottom: 0;
+    
+}
+.user-form form input[type='submit']{
+    border: none;
+    font-weight: bold;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+.user-form form input[type='submit']:hover{
+    background-color: aliceblue;
+}
+.active-li{
+    border-bottom: 1px solid #3F4C5C;
+}
+@media only screen and (max-width: 1290px){
+    .tumanlar ul {
+        display: grid;
+        grid-template-columns: auto auto auto;
+    }
+    #sidebar{
+        width: 25%;
+    }
+    .center-page{
+        width: 30%;
+    }
+    .main{
+        margin-left: 28%;
+    }
+    .chart{
+        height: 60vh;
+    }
+}

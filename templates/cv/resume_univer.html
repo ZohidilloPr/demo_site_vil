@@ -1,0 +1,158 @@
+{% extends "main.html" %}
+
+{% block title %}
+    {{ object.f_name }}
+{% endblock title %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb" class="sticky-top bg-light">
+    <ol class="breadcrumb p-3">
+      <li class="breadcrumb-item"><a href="{% url 'UB' pk=object.universitet.pk %}">Ortga qaytish</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ object }}ning Resumesi</li>
+    </ol>
+</nav>
+<div class="row">
+    <div class="shadow_light col-xxl-5 m-auto p-5 border border-info">
+        <div class="img-name pe-3">
+            <div class="img border-end border-info pt-3">
+                <img src="{{ object.img.url }}" width="100" alt="">
+                <div class="my-5"></div>
+                <div class="imkonyat">
+                    <h3>Imkonyatlari</h3>
+                    <ul>
+                        {% for i in object.imkonyat.all %}  
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Chet tillari</h3>
+                    <ul>
+                        {% for i in object.chettili.all %}  
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Haydovchilik Guvohnoma</h3>
+                    <ul>
+                        {% for i in object.guvohnoma.all %}  
+                            <li>{{ i }} toifa</li>
+                        {% empty %}
+                            <li>Guvohnoma mavjud emas</li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Biznes G'oya</h3>
+                    <ul>
+                        <li>{{ object.idea }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="name">
+                <div class="user-name">
+                    <h1 class="ism">{{ object.f_name }}</h1>
+                </div>
+                <div class="data">
+                    <h3>Shaxsiy malumotlar</h3>
+                    <table class="table">
+                        <tr>
+                            <th>Tug'ulgan sana: </th>
+                            {% if object.t_sana %}
+                                <td>{{ object.t_sana }}</td>
+                            {% else %}
+                                <td>Mavjud emas</td>  
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>Yashash manzili: </th>
+                            {% if object.uy %}  
+                                <td class="ps-1"> {{ object.tuman }} {{ object.mahalla }} {{ object.uy }}</td>
+                            {% else %}
+                                <td class="ps-1"> {{ object.tuman }} {{ object.mahalla }}</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>Jins</th>
+                            <td>{{ object.jins }}</td>
+                        </tr> 
+                        <tr>
+                            <th>Telefon raqami: </th>
+                            <td>(+998) {{ object.phone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email: </th>
+                            {% if object.email %}  
+                                <td>{{ object.email }}</td>
+                            {% else %}
+                                <td>Mavjud emas</td>
+                            {% endif %}
+                        </tr>
+                    </table>
+                    <div class="my-5"></div>
+                    <div class="info-data">
+                    <h3 class="">
+                        Ta'lim
+                    </h3>
+                    {% if object.universiteT %}                          
+                        <p>
+                            "{{ object.universiteT }} " ---- {{ object.stu_way }} yonalishida
+                          
+                        </p>
+                    {% elif object.universitet %}
+                        <p>
+                            {{ object.vil }} " {{ object.universitet }} " {{ object.stu_way }} yonalishida
+                        </p>
+                    {% else %}
+                        <p>
+                            {{ object.other_un }} --- {{ object.stu_way_ch }}
+                        </p>
+                    {% endif %}
+                    <h3>Maqsadi</h3>
+                    <p>
+                        {{ object.maqsad }}
+                    </p>
+                    <h3>Qiziqishlari</h3>
+                    <ul>
+                        <li>
+                            {{ object.qiziqish }}
+                        </li>
+                    </ul>
+                    <h3>Yoqtirgan Sport turi</h3>
+                    <ul>
+                        {% for i in object.sport.all %}
+                            <li>{{ i }}</li>
+                        {% empty %}
+                            <li>malumot mavjud emas</li>
+                        {% endfor %}
+                    </ul>
+                    {% if object.short_f %}
+                        <h3>Biznes g'oya haqida ozroq</h3>
+                        <p>
+                            {{ object.short_f }}
+                        </p>  
+                    {% endif %}
+                        <h3>Fuqoro xaqida</h3>
+                        <p>
+                        {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
+                        {% if object.universitet %}
+                            {{ object.vil }}da {{ object.universitet }}ning {{ object.stu_way }}
+                            yonalishida bitiruvchi
+                        {% else %}  
+                            {{ object.universiteT }}ning {{ object.stu_way }} yonalishida bituruvchi.  
+                        {% endif %}
+                        {% if object.idea == 'Bor' %}  
+                            O'zini biznes g'oyasi bor
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,150 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+    OTM Topshirganlar
+{% endblock %}
+
+{% block content %}
+    <div class="background-table" >
+        <div class="row">
+            <div class="col-10 m-auto">
+                <h1 class="text-center my-1">Bitiruvchilar haqida malumotlar</h1>
+                <nav class="navbar navbar-expand-lg my-4 bg-light">
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav w-100 justify-content-center top-nav">
+                        <li class="nav-item ">
+                            <a href="{% url 'T' %}" class="nav-link ">Hammasi</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="{% url 'M' %}">Maktab</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="{% url 'K' %}">Professional ta'lim</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="{% url 'F' %}">OTM Bitiruvchilari</a>
+                        </li>
+                        <li class="nav-item active-li">
+                        <a href="{% url 'E' %}" class="nav-link active">OTMga topshirganlar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'H' %}" class="btn btn-outline-success">Diagrammada ko'rish</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-success" id="OTM_T_Export" type="button" href="">Jadvalni yuklab olish</a>
+                        </li>
+                    </ul>
+                    </div>
+                </nav>
+                <div class="my-4 pb-3 bg-shadow-a bg-light">
+                    <form action="" method="get" novalidate class="indexFilter">
+                        <div class="input-group input-group-sm">
+                            <label for="id_tuman" class="input-group-text">Tuman&Shahar</label>
+                            {{ mkFil.form.tuman|add_class:"form-select" }}
+                            <label for="id_mahalla" class="input-group-text ms-3">Mahalla</label>
+                            {{ mkFil.form.mahalla|add_class:"form-select" }}
+                            <input type="submit" value="Qidirish" class="mx-3 btn btn-outline-dark  btn-sm">
+                        </div>
+                    </form>
+                </div>
+                <div class="table-box">
+                    <table class="table">
+                        <thead class="border-info">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">F.I.SH</th>
+                                <th scope="col">
+                                    Yashash manzili
+                                </th>
+                                <th scope="col">
+                                    Tugatayotgan ta'lim muassasi
+                                </th>
+                                <th scope="col">
+                                    Topshirgan OTM nomi
+                                </th>
+                                <th scope="col">Kun/Oy/Yil</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in object_list %}
+                                {% if i.maktabbitiruvchisi.otm_name == None or i.kollejbitiruvchisi.otm_name == None%}
+                                
+                                {% elif i.universitetbitiruvchisi %}    
+                                
+                                {% else %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'RE' pk=i.pk %}">{{i.f_name}}</a></td>
+                                        <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                        <td>{{ i.maktabbitiruvchisi.maktab }} {{ i.universitetbitiruvchisi.universitet }} {{ i.kollejbitiruvchisi.kollej }}</td>
+                                        <td>{{ i.kollejbitiruvchisi.otm_name }}{{ i.maktabbitiruvchisi.otm_name }}</td>
+                                        <td>{{ i.t_sana }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% empty %}
+                                <td colspan="6" class="text-center">Afsuski siz so'ragan malumotlar mavjud emas</td>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        {% if object_list.has_other_pages %}
+        <nav class="notShadow py-4 my-3">
+            <ul class="pagination justify-content-center">
+                {% if object_list.has_previous %}                      
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ object_list.previous_page_number }}">Ortga</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="">Ortga</a>
+                    </li>
+                {% endif %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">Birinchi sahifa</a>
+                </li>
+        
+                {% if object_list.number|add:'-1' > 1 %}
+                    <li class="page-item disabled"><a class="page-link">&hellip;</a></li>
+                {% endif %}
+        
+                {% for i in object_list.paginator.page_range %}
+                    {% if object_list.number == i %}
+                        <li class="active page-item disabled"><a class="page-link" href="#">{{ i }}</a></li>
+                    {% elif i > object_list.number|add:'-2' and i < object_list.number|add:'2' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+        
+                {% if object_list.paginator.num_pages > object_list.number|add:'1' %}
+                    <li class="page-item disabled"><a class="page-link" href="#">&hellip;</a></li>
+                {% endif %}
+        
+                <li class="page-item {% if not object_list.has_next %} disabled {% endif %}">
+                    <a class="page-link" href="?page={{ object_list.next_page_number }}">Keyingi</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'js/table2excel.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $("#OTM_T_Export").click(function(){
+                $(".table").table2excel({
+                    exclude: ".noExl",
+                    name: "filterlangan barcha talabalar",
+                    filename: `OTM__topshirganlar__ro'yhati__${new Date()}`,
+                    fileext: ".xlsx",
+                    exclude_links: true,
+                    sheetName: "Open Data "
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Home
+{% endblock %}
+{% block content %}
+
+    <div class="background data-bg hidden-over">
+        <div id="sidebar">
+            <div id="bar">
+                <ul>
+                    <li>
+                        <a href="{% url 'H' %}" class="a-link active-sidebar">Bosh sahifa</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'AD' %}" class="a-link ">Tumanlar</a>
+                    </li>
+                    {% if user.staff == True or user.data_add == True %}                      
+                        <li>
+                            <a href="{% url 'DA' %}" class="a-link">Ma'lumot qo'shish</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'T' %}" class="a-link">Jadvallarda ko'rish</a>
+                    </li>
+                    {% if user.superuser == True %}                      
+                        <li>
+                            <a href="{% url 'SIMPLE' %}" class="a-link">DATABASE</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'users:LO' %}" class="a-link border border-danger text-danger">Accountdan chiqish</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main">
+            <form action="{% url 'SEA' %}" method="get">
+                <div class="input-group mb-3 search-box">
+                    <input type="search" class="search" placeholder="Bitiruvchilarni qidirish" aria-label="Recipient's username" name="searchHome" aria-describedby="button-addon2"> 
+                    <button class="btn btn-outline-success" type="submit" id="button-addon2">Qidirish</button>
+                </div>
+            </form>
+            <div class="chart">
+                <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
+                <canvas id="toshvil"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script>
+        const toshvil = document.getElementById("toshvil").getContext("2d");
+        const vilChart = new Chart(toshvil, {
+            type: 'bar',
+            data: {
+                labels : ['OTM bitiruvchilari', 'Professional ta\'lim bitiruvchilari', 'Maktab bitiruvchilari'],
+                datasets : [{
+                    label: '',
+                    axis: 'y',
+                    data: ['{{ unb }}', '{{ kjb }}', '{{ mkb }}'],
+                    fill: false,
+                    backgroundColor: [
+                        'rgba(5, 140, 145, 0.47)',
+                        'rgba(9, 57, 142, 0.45)',
+                        'rgba(8, 140, 78, 0.5)',
+                    ],
+                    borderColor: [
+                        'rgba(5, 140, 145, 1)',
+                        'rgba(9, 57, 142, 1)',
+                        'rgba(8, 140, 78, 1)',
+                    ],
+                    borderWidth: 1,
+                    hoverOffset: 10,
+                }]
+            },
+            options: {
+                scales:{
+                    y:{
+                        beginAtZone :true,
+                    },
+                    x:{
+                        grid:{
+                            offset: true,
+                        },
+                    }
+                }
+            }
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends '../../main.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block title %}
+    Kollej Bitiruvchisi Taxrirlash
+{% endblock title %}
+
+{% block content %}
+    <div class="container my-5">
+        <h2 class="my-5">Professional ta'lim bitiruvchisini taxrirlash</h2>
+        <form action="" method="post" id="kollejBForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_f_name" class="mb-1">F.I.Sh</label>
+                <div class="input-group mb-3">
+                    {{ form.f_name }}
+                    {{ form.jins }}
+                    <label for="id_img" class="input-group-text">Foto rasmini yuklash</label>
+                    {{ form.img }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="id_t_sana" class="form-label">Tug'ulgan sana</label>
+                <div class="input-group">
+                    {{ form.t_sana }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="id_tuman" class="mb-1">Yashash manzili</label>
+                <div class="input-group mb-3">
+                    {{ form.tuman }}
+                    {{ form.mahalla }}
+                    {{ form.uy }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="id_phone" class="form-label">Telefon raqam</label>
+                {{ form.phone }}
+            </div>
+            <div class="mb-3">
+                <label for="id_email" class="form-label">E-Pochta</label>
+                {{ form.email }}
+            </div>
+            <div class="mb-3">
+                <label for="type" class="mb-1">Tugatayotgan ta'lim muassasasi</label>
+                <div class="input-group mb-3">
+                    {{ form.type }}
+                    {{ form.tuman_kj }}
+                    {{ form.kollej }}
+                </div>
+                <label for="id_stu_way">Mutaxasisligi</label>
+                {{ form.stu_way }}
+            </div>
+            <div class="mb-3">
+                <label for="id_maqsad" class="form-label">Maqsadi</label>
+                {{ form.maqsad }}
+            </div>
+            <div class="mb-3" id="imkonyat">
+                <label for="id_imkonyat" class="form-label">Kompyuter bilimlari</label>
+                {{ form.imkonyat }}
+            </div>
+            <div class="mb-3" >
+                <label for="id_qiziqish" class="form-label">Qiziqishlar</label>
+                {{ form.qiziqish }}
+            </div>
+            <div class="mb-3" >
+                <label for="id_sport" class="form-label">Sport turlari</label>
+                {{ form.sport }}
+            </div>
+            <div class="mb-3" >
+                <label for="id_chettili" class="form-label">Chet tillari</label>
+                {{ form.chettili }}
+            </div>
+            <div class="mb-3" >
+                <label for="id_guvohnoma" class="form-label">Haydovchilik guvohnoma</label>
+                {{ form.guvohnoma }}
+            </div>
+            <div class="mb-3">
+                <label for="id_idea" class="form-label">Biznes g'oya</label>
+                <div class="input-group mb-3">
+                    {{ form.idea }}
+                    {{ form.short_f }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="vil" class="mb-1">Topshirmoqchi bo'lgan OTM</label>
+                <div class="input-group mb-3">
+                    {{ form.vil }}
+                    {{ form.otm_name }}
+                    {{ form.stu_way_un }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="id_other_un" class="mb-1">Chet el OTM</label>
+                <div class="input-group mb-3">
+                    {{ form.other_un }}
+                    {{ form.stu_way_ch }}
+                </div>
+            </div>
+            <input type="submit" class="btn btn-outline-primary mb-5" value="Professional ta'lim bitiruvchi taxrirlash">
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="{% static 'js/chosen.jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $("#id_imkonyat").chosen();
+            $("#id_sport").chosen();
+            $("#id_chettili").chosen();
+            $("#id_guvohnoma").chosen();
+        });
+        $(function(){
+            $('input').addClass("form-control");
+            $('select').addClass("form-select");
+            $("#id_t_sana_day option:selected").html("Kun");
+            $("#id_t_sana_month option:selected").html("Oy");
+            $("#id_t_sana_year option:selected").html("Yil");
+        });
+        $("#id_idea").change(function(){
+            const idea = $(this).val()
+            if (idea == "Bor") {
+                // console.log($(this).val())
+                $("#id_short_f").attr("disabled", false)
+            }
+            else{
+                $("#id_short_f").attr("disabled", true)
+            }
+        })
+        $("#id_tuman").change(function(){
+            const url1 = $("#mahalla").attr("mahalla-queries-url");
+            const tumanId = $(this).val();
+
+            $.ajax({
+                url : url1,
+                data:{
+                    'tuman_id':tumanId,
+                },
+                success: function(data){
+                    $("#mahalla").html(data);
+                },
+            });
+        });
+        $("#tuman_kj").change(function(){
+            const url2 = $("#kollej").attr("typekollej-queries-url");
+            const typeId = $("#type").children("option:selected").val()
+            const tumanId = $(this).val();
+            console.log(typeId)
+            $.ajax({
+                url : url2,     
+                data:{
+                    'tuman_kj':tumanId,
+                    'type':typeId,
+                },
+                success: function(data){
+                    console.log(data, typeId, url2, tumanId)
+                    $("#kollej").html(data)
+                }
+            });
+        });
+        $("#vil").change(function(){
+            const url = $("#otm_name").attr("otm-queries-url");
+            const vilID = $(this).val();
+
+            $.ajax({
+                url:url,
+                data:{
+                    'viloyat': vilID,
+                },
+                success: function(data){
+                    // console.log(data, vilID, url)
+                    $("#otm_name").html(data)
+                }
+            })
+        });
+    </script>
+{% endblock content %}

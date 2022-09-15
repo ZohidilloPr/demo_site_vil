@@ -1,0 +1,44 @@
+{% extends "main.html" %}
+{% load static %}
+{% block content %}
+
+<button class="btn btn-outline-success m-4" id="export" type="button">export data</button>
+    <div class="container">
+        <table id="table" class="display" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>F.I.SH</th>
+                    <th>add time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ i.f_name }}</td>
+                        <td>{{ i.add_time }}</td>
+                    </tr>  
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+    <script src="{% static 'js/jquery_min.js' %}"></script>
+    <script src="{% static 'js/table2excel.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/fh-3.2.4/r-2.3.0/sl-1.4.0/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/fh-3.2.4/r-2.3.0/sl-1.4.0/datatables.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#table").DataTable({
+                dom: 'Bfrtip',
+                lengthChange : true,
+                buttons:[
+                    'excel','pdf', 'print'
+                ]
+            });
+        })
+    </script>
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% load django_bootstrap5 %}
+
+{% include "widgets/breadcrumb.html" %}
+<div class="container my-5">
+    <h2 class="my-5">Yangi {{ name }} Qo'shish</h2>
+    <form action="" method="post" id="MaktabBForm" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" class="btn btn-outline-primary mb-5" value="Yangi Malumot Qo'shish">
+    </form>
+</div>

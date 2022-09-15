@@ -1,0 +1,23 @@
+<div id="sidebar">
+    <div id="bar">
+        <ul>
+            <li>
+                <a href="{% url 'H' %}" class="a-link ">Bosh sahifa</a>
+            </li>
+            <li>
+                <a href="{% url 'AD' %}" class="a-link active-sidebar">Tumanlar</a>
+            </li>
+            {% if user.staff == True or user.data_add == True %}                      
+                <li>
+                    <a href="{% url 'DA' %}" class="a-link">Ma'lumot qo'shish</a>
+                </li>
+            {% endif %}
+            <li>
+                <a href="{% url 'T' %}" class="a-link">Jadvallarda ko'rish</a>
+            </li>
+            <li>
+                <a href="{% url 'users:LO' %}" class="a-link border border-danger text-danger">Accountdan chiqish</a>
+            </li>
+        </ul>
+    </div>
+</div>

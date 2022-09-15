@@ -1,0 +1,100 @@
+{% extends "../main.html" %}
+{% load static %}
+{% block title %}
+    Ma'lumot qo'shish
+{% endblock title %}
+
+{% block content %}
+
+    <div class="background" id="win">
+        <div id="sidebar">
+            <div id="bar"> 
+                <ul>
+                    <li>
+                        <a href="{% url 'H' %}" class="a-link ">Bosh sahifa</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'AD' %}" class="a-link ">Tumanlar</a>
+                    </li>
+                    {% if user.staff == True or user.data_add == True %}                      
+                        <li>
+                            <a href="{% url 'DA' %}" class="a-link">Ma'lumot qo'shish</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'T' %}" class="a-link">Jadvallarda ko'rish</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'users:LO' %}" class="a-link border border-danger text-danger">Accountdan chiqish</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main">
+            {% if user.staff == True %}
+                <div class="tumanlar">
+                    <br>
+                    <hr>
+                    <br>
+                    <ul id="data">
+                        <li><a href="{% url 'users:RUF' %}">Yangi Foydalanuvchi</a></li>
+                        <li><a href="{% url 'MBA' %}">Maktab Bitiruvchilari</a></li>
+                        <li><a href="{% url 'KBA' %}">Professional ta'lim Bitiruvchilari</a></li>
+                        <li><a href="{% url 'UBA' %}">OTM Bitiruvchilari</a></li>
+                    </ul>
+                    <br>
+                    <hr>
+                    <br>
+                    <ul id="data">
+                        <li><a href="{% url 'MaNAV' %}">Maktab</a></li>
+                        <li><a href="{% url 'KNAV' %}"> Professional ta'lim </a></li>
+                        <li><a href="{% url 'UNAV' %}">OTM</a></li>
+                    </ul>
+                    <br>
+                    <hr>
+                    <br>
+                    <ul id="data">
+                        <li><a href="{% url 'QNAV' %}">Qiziqishlar</a></li>
+                        <li><a href="{% url 'INAV' %}">Imkonyatlar</a></li>
+                        <li><a href="{% url 'FNAV' %}">Chet tili</a></li>
+                        <li><a href="{% url 'SNAV' %}">Sport turi</a></li>
+                    </ul>
+                    <br>
+                    <hr>
+                    <br>
+                    <ul id="data">
+                        <li><a href="{% url 'MNAV' %}">Mahalla</a></li>
+                        <li><a href="{% url 'TvSNAV' %}">Tuman Va Shahar</a></li>
+                        <li><a href="{% url 'VNAV' %}">Viloyatlar</a></li>
+                    </ul>
+                </div>  
+            {% elif user.data_add == True %}
+                <div class="tumanlar">
+                    <br>
+                    <hr>
+                    <br>
+                    <ul id="data">
+                        <li><a href="{% url 'MBA' %}">Maktab Bitiruvchilari</a></li>
+                        <li><a href="{% url 'KBA' %}">Professional ta'lim Bitiruvchilari</a></li>
+                        <li><a href="{% url 'UBA' %}">OTM Bitiruvchilari</a></li>
+                    </ul>
+                    <br>
+                    <hr>
+                    <br>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            let user = "{{ user.data_add }}"
+            if (user == "True") {
+                $("#win").addClass("data-bg")
+            } else {
+                console.log(user)
+            }
+        });
+    </script>
+{% endblock content %}

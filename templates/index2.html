@@ -1,0 +1,317 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+    TEST TABLE
+{% endblock %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/date-1.1.2/fc-4.1.0/fh-3.2.4/kt-2.7.0/r-2.3.0/rg-1.2.0/rr-1.2.8/sc-2.0.7/sb-1.3.4/sp-2.0.2/sl-1.4.0/sr-1.1.1/datatables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"> -->
+    <div class="container mt-5">
+        <table class="table table-striped nowrap" style="width: 100%;" id="table">
+            <thead>
+                <tr>
+                    <th data-data="id">Id</th>
+                    <th data-data="f_name">F.I.SH</th>
+                    <th data-data="f_name">Yashash manzili</th>
+                </tr>
+            </thead>
+            <!-- <tbody>
+                {% for i in object_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
+                        <td>{{ i.tuman }} {{ i.mahalla }} {{ i.uy }}</td>
+                        <td class="hidden2">{{ i.phone }} <br> {{ i.email }}</td>
+                        <td class="">
+                            {% for k in i.imkonyat.all %}
+                                {{ k.name }} |   
+                            {% empty %}
+                                malumotlar kiritilmagan
+                            {% endfor %}
+                        </td>
+                        <td class="hidden2">{{ i.qiziqish }}</td>
+                        <td class="hidden2">
+                            {% for s in i.sport.all %}
+                                {{ s.name }} |   
+                            {% empty %}
+                                malumotlar mavjudemas
+                            {% endfor %}
+                        </td>
+                        <td class="hidden2">
+                            {% for ch in i.chettili.all %}
+                                {{ ch.name }} |   
+                            {% empty %}
+                                malumotlar mavjudemas
+                            {% endfor %}
+                        </td>
+                        <td class="hidden2">{{ i.idea }}</td>
+                        <td class="hidden2">{{ i.short_f }}</td>
+                        <td class="hidden2">
+                            {% if i.kollejbitiruvchisi.guvohnoma %}
+                                {% for g in i.kollejbitiruvchisi.guvohnoma.all %}
+                                    {{ g }} |   
+                                {% endfor %}
+                            {% elif i.universitetbitiruvchisi.guvohnoma %}
+                                {% for u in i.universitetbitiruvchisi.guvohnoma.all %}
+                                    {{ u }} |   
+                                {% endfor %}
+                            {% else %}
+                                Guvohnoma mavjudemas      
+                            {% endif %}
+                        </td>
+                        <td class="hidden2">
+                            {% if i.maktabbitiruvchisi.maktab %}
+                                {{ i.maktabbitiruvchisi.maktab.status }}
+                            {% elif i.kollejbitiruvchisi.kollej %}
+                                {{ i.kollejbitiruvchisi.kollej.type }}        
+                            {% else %}
+                                OTM
+                            {% endif %}
+                        </td>
+                        <td class="hidden2">
+                            {% if i.maktabbitiruvchisi.tuman_mk %}
+                                {{ i.maktabbitiruvchisi.tuman_mk }}
+                            {% elif i.kollejbitiruvchisi.tuman_kj %}
+                                {{ i.kollejbitiruvchisi.tuman_kj }}      
+                            {% else %}
+                                {{ i.universitetbitiruvchisi.vil }}
+                            {% endif %}
+                        </td>
+                        {% if i.maktabbitiruvchisi.maktab %}
+                            <td>{{ i.maktabbitiruvchisi.maktab }}</td>
+                            <td>{{ i.maktabbitiruvchisi.sinf }}</td>
+                            <td class="noExl">
+                                {% if user == i.author or user.superuser == True %}
+                                    <a href="{% url 'EMB' pk=i.pk %}" class="btn btn-primary btn-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                        </svg>
+                                    </a>  
+                                {% endif %}  
+                            </td>
+                        {% elif i.kollejbitiruvchisi.kollej %}
+                            <td>{{ i.kollejbitiruvchisi.kollej }}</td>
+                            <td>{{ i.kollejbitiruvchisi.stu_way }}</td>
+                            <td class="noExl">
+                                {% if user == i.author or user.superuser == True %}
+                                    <a href="{% url 'EKB' pk=i.pk %}" class="btn btn-primary btn-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                        </svg>    
+                                    </a>
+                                    <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                        </svg>    
+                                    </a>
+                                {% endif %}
+                            </td>
+                        {% elif i.universitetbitiruvchisi.universitet %}
+                            <td>{{ i.universitetbitiruvchisi.universitet }}</td>  
+                            <td>{{ i.universitetbitiruvchisi.stu_way }}</td>  
+                            <td class="noExl">
+                                {% if user == i.author or user.superuser == True %}
+                                    <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                        </svg>
+                                    </a>
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            <td>{{ i.universitetbitiruvchisi.other_un }}</td>  
+                            <td>{{ i.universitetbitiruvchisi.stu_way_ch }}</td>
+                            <td class="noExl">
+                                <a href="{% url 'EOB' pk=i.pk %}" class="btn btn-primary btn-sm">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
+                                </a>
+                                <a href="" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{forloop.counter}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        {% endif %}
+                        <td class="hidden2">
+                            {% if i.kollejbitiruvchisi.maqsad %}
+                                {{ i.kollejbitiruvchisi.maqsad }}
+                            {% elif i.universitetbitiruvchisi.maqsad %}
+                                {{ i.universitetbitiruvchisi.maqsad }}
+                            {% else %}
+                                Malumot mavjud emas          
+                            {% endif %}
+                        </td>
+                        {% if i.maktabbitiruvchisi %}
+                            <td class="hidden2">{{ i.maktabbitiruvchisi.vil }} <br> {{ i.maktabbitiruvchisi.otm_name }}</td>
+                        {% elif i.kollejbitiruvchisi %}          
+                            <td class="hidden2">{{ i.kollejbitiruvchisi.vil }} <br> {{ i.kollejbitiruvchisi.otm_name }}</td>
+                        {% else %}
+                            <td class="hidden2">
+                                Malumot mavjud emas    
+                            </td>    
+                        {% endif %}
+                        {% if i.maktabbitiruvchisi.other_un %}
+                            <td class="hidden2">{{ i.maktabbitiruvchisi.other_un }}</td>  
+                        {% elif i.kollejbitiruvchisi.other_un %}  
+                            <td class="hidden2">{{ i.kollejbitiruvchisi.other_un }}</td>  
+                        {% else %}
+                            <td class="hidden2">
+                                Malumot mavjud emas    
+                            </td>    
+                        {% endif %}
+                        {% if i.maktabbitiruvchisi.stu_way_un %}
+                            <td class="hidden2">{{ i.maktabbitiruvchisi.stu_way_un }}</td>
+                        {% elif i.kollejbitiruvchisi.stu_way_un %}
+                            <td class="hidden2">{{ i.kollejbitiruvchisi.stu_way_un }}</td>
+                        {% elif i.maktabbitiruvchisi.stu_way_ch %}    
+                            <td class="hidden2">{{ i.maktabbitiruvchisi.stu_way_ch }}</td>
+                        {% elif i.kollejbitiruvchisi.stu_way_ch %}
+                            <td class="hidden2">{{ i.kollejbitiruvchisi.stu_way_ch }}</td>
+                        {% else %}
+                            <td class="hidden2">Malumot mavjud emas</td>
+                        {% endif %}
+                    </tr> -->
+                    <!-- MODEL -->  
+                        <!-- Modal -->
+                        <!-- <div class="modal fade" id="staticBackdrop{{forloop.counter}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">"{{ i }}"</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Shu obeyktni rostan ham o'chirishni xoxlaysizmi ?
+                                    <br>
+                                    <small class="text-danger">Bu obeyktni o'chirgandan so'ng qayta tiklash imkoni yoq!</small>
+                                </div>
+                                <div class="modal-footer">
+                                    <form action="{% url 'DB' pk=i.pk %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor qilish</button>
+                                        <button type="submit" class="btn btn-danger">O'chirib yuborish</button>
+                                    </form>
+                                </div>
+                            </div>
+                            </div>
+                        </div> -->
+                    <!-- MODEL -->
+                <!-- {% empty %}
+                    <tr class="text-center">
+                        <td colspan="6">Afsuski siz qidirgan malumotlar topilmadi</td>
+                    </tr>
+                {% endfor %}
+            </tbody> -->
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    {% if object_list.has_other_pages %}
+        <nav class="notShadow py-4 my-3">
+            <ul class="pagination justify-content-center">
+                {% if object_list.has_previous %}                      
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ object_list.previous_page_number }}">Ortga</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="">Ortga</a>
+                    </li>
+                {% endif %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">Birinchi sahifa</a>
+                </li>
+        
+                {% if object_list.number|add:'-1' > 1 %}
+                    <li class="page-item disabled"><a class="page-link">&hellip;</a></li>
+                {% endif %}
+        
+                {% for i in object_list.paginator.page_range %}
+                    {% if object_list.number == i %}
+                        <li class="active page-item disabled"><a class="page-link" href="#">{{ i }}</a></li>
+                    {% elif i > object_list.number|add:'-2' and i < object_list.number|add:'2' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+        
+                {% if object_list.paginator.num_pages > object_list.number|add:'1' %}
+                    <li class="page-item disabled"><a class="page-link" href="#">&hellip;</a></li>
+                {% endif %}
+        
+                <li class="page-item {% if not object_list.has_next %} disabled {% endif %}">
+                    <a class="page-link" href="?page={{ object_list.next_page_number }}">Keyingi</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.6.0/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/cr-1.5.6/date-1.1.2/fc-4.1.0/fh-3.2.4/kt-2.7.0/r-2.3.0/rg-1.2.0/rr-1.2.8/sc-2.0.7/sb-1.3.4/sp-2.0.2/sl-1.4.0/sr-1.1.1/datatables.min.js"></script>    
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                url: 'http://127.0.0.1:8000/api-view/list/',
+                dataType : "json",
+                success: function(data){
+                    let table = ''
+                    $.each(data.results, function(index, value){
+                        table += '<tr>'
+                        table += `<td> ${value.id} </td>`
+                        table += `<td> ${value.f_name} </td>`
+                        table += `<td> ${value.tuman.name} ${value.tuman.status} ${value.mahalla.name} MFY ${value.uy} </td>`
+                        table += '</tr>'
+                    });
+                    $("#table").append(table)
+                }
+            })
+        });
+        $(document).ready(function(){
+            $('#table1').DataTable({
+                // processing: true,
+                // serverSide: true,
+                // "ajax":{"url": "http://127.0.0.1:8000/api-view/list/", type: 'GET'},
+                // collums : [
+                //     {data: "id"},
+                //     {data: "f_name"},
+                // ],
+                // "searching": true,
+                // "scrollX": true,
+                // "paging": true,
+                // "autoWidth":false,
+                // scrollCollapse: true,
+                // columnDefs: [
+                //     { width: '5%', targets: 1 },
+                // ],
+                // fixedColumns: true,
+                // dom: 'Bfrtip',
+                // buttons: [
+                //     'excel', 'pageLength'
+                // ],
+            });
+        })
+    </script>
+<!--    -->
+ 
+{% endblock %}
+            

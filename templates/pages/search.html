@@ -1,0 +1,310 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    Home
+{% endblock %}
+{% block content %}
+
+    <div class="background">
+        <div id="sidebar">
+            <div id="bar">
+                <ul>
+                    <li>
+                        <a href="{% url 'H' %}" class="a-link active-sidebar">Bosh sahifa</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'AD' %}" class="a-link ">Tumanlar</a>
+                    </li>
+                    {% if user.staff == True or user.data_add == True %}                      
+                        <li>
+                            <a href="{% url 'DA' %}" class="a-link">Ma'lumot qo'shish</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'T' %}" class="a-link">Jadvallarda ko'rish</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'users:LO' %}" class="a-link border border-danger text-danger">Accountdan chiqish</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main">
+            <form action="{% url 'SEA' %}" id="fsearch" method="get">
+                <div class="input-group mb-3 search-box">
+                    <input type="search" class="search" placeholder="Bitiruvchilarni qidirish" aria-label="Recipient's username" id="searchHome" name="searchHome" aria-describedby="button-addon2"> 
+                    <button class="btn btn-outline-success" type="submit" id="button-addon2">Qidirish</button>
+                </div>
+            </form>
+            <div class="chart">
+                <h1>Bu yilgi bitiruvchilar raqamlarda</h1>
+                <canvas id="toshvil"></canvas>
+            </div>
+            <div class="text-end py-3">
+                <a class="btn btn-outline-success btn-sm" id="exportSearched" type="button" href="">Jadvalni yuklab olish</a>
+            </div>
+            <div class="table-box">
+                <table class="table">
+                    <thead class="border-info">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">F.I.SH</th>
+                            <th scope="col">
+                                Yashash manzili
+                            </th>
+                            <th class="hidden2" scope="col">Uy</th>
+                            <th class="hidden2" scope="col">Telefon raqam</th>
+                            <th class="hidden2" scope="col">E-Pochta</th>
+                            <th class="hidden2" scope="col">Kompyuter bilimlari</th>
+                            <th class="hidden2" scope="col">Qiziqishlari</th>
+                            <th class="hidden2" scope="col">Yoqtirgan sport turi</th>
+                            <th class="hidden2" scope="col">Chet tili</th>
+                            <th class="hidden2" scope="col">Bizsess g'oya</th>
+                            <th class="hidden2" scope="col">Bizsess g'oya xaqida</th>
+                            <th class="hidden2" scope="col">Haydovchilik Guvohnomasi</th>
+                            <th class="hidden2" scope="col">TTMning Turi</th>
+                            <th class="hidden2" scope="col">TTMning manzili</th>
+                            <th scope="col">
+                                Tugatayotgan ta'lim muassasasi
+                            </th>
+                            <th scope="col">Sinf/Mutaxasisligi</th>
+                            <th class="hidden2" scope="col">Maqsadi</th>
+                            <th class="hidden2" scope="col">Topshirgan OTM manzili</th>
+                            <th class="hidden2" scope="col">Topshirgan OTM nomi</th>
+                            <th class="hidden2" scope="col">Topshirgan OTM yonalishi</th>
+                            <th class="hidden2" scope="col">ChetEl OTM nomi</th>
+                            <th class="hidden2" scope="col">Yonalishi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in object_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
+                                <td>{{ i.tuman }} {{ i.mahalla }}</td>
+                                <td class="hidden2">{{ i.uy }}</td>
+                                <td class="hidden2">{{ i.phone }}</td>
+                                <td class="hidden2">{{ i.email }}</td>
+                                <td class="hidden2">
+                                    {% for k in i.imkonyat.all %}
+                                        {{ k.name }} |   
+                                    {% empty %}
+                                        malumotlar kiritilmagan
+                                    {% endfor %}
+                                </td>
+                                <td class="hidden2">{{ i.qiziqish }}</td>
+                                <td class="hidden2">
+                                    {% for s in i.sport.all %}
+                                        {{ s.name }} |   
+                                    {% empty %}
+                                        malumotlar mavjudemas
+                                    {% endfor %}
+                                </td>
+                                <td class="hidden2">
+                                    {% for ch in i.chettili.all %}
+                                        {{ ch.name }} |   
+                                    {% empty %}
+                                        malumotlar mavjudemas
+                                    {% endfor %}
+                                </td>
+                                <td class="hidden2">{{ i.idea }}</td>
+                                <td class="hidden2">{{ i.short_f }}</td>
+                                <td class="hidden2">
+                                    {% if i.kollejbitiruvchisi.guvohnoma %}
+                                        {% for g in i.kollejbitiruvchisi.guvohnoma.all %}
+                                            {{ g }} |   
+                                        {% endfor %}
+                                    {% elif i.universitetbitiruvchisi.guvohnoma %}
+                                        {% for u in i.universitetbitiruvchisi.guvohnoma.all %}
+                                            {{ u }} |   
+                                        {% endfor %}
+                                    {% else %}
+                                        Guvohnoma mavjudemas      
+                                    {% endif %}
+                                </td>
+                                <td class="hidden2">
+                                    {% if i.maktabbitiruvchisi %}
+                                        {{ i.maktabbitiruvchisi.maktab.status }}
+                                    {% elif i.kollejbitiruvchisi.kollej %}
+                                        {{ i.kollejbitiruvchisi.kollej.type }}        
+                                    {% else %}
+                                        OTM
+                                    {% endif %}
+                                </td>
+                                <td class="hidden2">
+                                    {% if i.maktabbitiruvchisi.tuman_mk %}
+                                        {{ i.maktabbitiruvchisi.tuman_mk }}
+                                    {% elif i.kollejbitiruvchisi.tuman_kj %}
+                                        {{ i.kollejbitiruvchisi.tuman_kj }}      
+                                    {% else %}
+                                        {{ i.universitetbitiruvchisi.vil }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if i.maktabbitiruvchisi %}
+                                        {{ i.maktabbitiruvchisi.maktab }}
+                                    {% elif i.kollejbitiruvchisi.kollej %}
+                                        {{ i.kollejbitiruvchisi.kollej }}  
+                                    {% elif i.kollejbitiruvchisi.kolleJ %}
+                                        {{ i.kollejbitiruvchisi.kolleJ }}      
+                                    {% elif i.universitetbitiruvchisi.universitet %}
+                                        {{ i.universitetbitiruvchisi.universitet }}
+                                    {% elif i.universitetbitiruvchisi.other_un %}
+                                        {{ i.universitetbitiruvchisi.other_un }}
+                                    {% else %}
+                                        {{ i.universitetbitiruvchisi.universiteT }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if i.maktabbitiruvchisi %}
+                                        {{ i.maktabbitiruvchisi.sinf }}
+                                    {% elif i.kollejbitiruvchisi.kollej %}
+                                        {{ i.kollejbitiruvchisi.stu_way }}  
+                                    {% elif i.kollejbitiruvchisi.kolleJ %}
+                                        {{ i.kollejbitiruvchisi.stu_way }}      
+                                    {% elif i.universitetbitiruvchisi.stu_way %}
+                                        {{ i.universitetbitiruvchisi.stu_way }}
+                                    {% elif i.universitetbitiruvchisi.other_un %}
+                                        {{ i.universitetbitiruvchisi.stu_way_ch }}
+                                    {% else %}
+                                        malumot kiritilmagan
+                                    {% endif %}
+                                </td>
+                                <td class="hidden2">
+                                    {% if i.kollejbitiruvchisi.maqsad %}
+                                        {{ i.kollejbitiruvchisi.maqsad }}
+                                    {% elif i.universitetbitiruvchisi.maqsad %}
+                                        {{ i.universitetbitiruvchisi.maqsad }}
+                                    {% else %}
+                                        Malumot mavjud emas          
+                                    {% endif %}
+                                </td>
+                                {% if i.maktabbitiruvchisi %}
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.vil }}</td>
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.otm_name }}</td>
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.stu_way_un }}</td>
+                                {% elif i.kollejbitiruvchisi %}          
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.vil }}</td>
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.otm_name }}</td>
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.stu_way_un }}</td>
+                                {% else %}
+                                    <td class="hidden2">
+                                        Malumot mavjud emas    
+                                    </td>    
+                                {% endif %}
+                                {% if i.maktabbitiruvchisi.other_un %}
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.other_un }}</td>  
+                                    <td class="hidden2">{{ i.maktabbitiruvchisi.stu_way_ch }}</td>
+                                {% elif i.kollejbitiruvchisi.other_un %}  
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.other_un }}</td>  
+                                    <td class="hidden2">{{ i.kollejbitiruvchisi.stu_way_ch }}</td>
+                                {% else %}
+                                    <td class="hidden2">
+                                        Malumot mavjud emas    
+                                    </td>    
+                                {% endif %}
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7">Kechirasi Ammo bunday malumot topilmadi</td>
+                            </tr>
+                            {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% if object_list.has_other_pages %}
+        <nav class="notShadow py-4 my-3">
+            <ul class="pagination justify-content-center">
+                {% if object_list.has_previous %}                      
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ object_list.previous_page_number }}">Ortga</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="">Ortga</a>
+                    </li>
+                {% endif %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">Birinchi sahifa</a>
+                </li>
+        
+                {% if object_list.number|add:'-1' > 1 %}
+                    <li class="page-item disabled"><a class="page-link">&hellip;</a></li>
+                {% endif %}
+        
+                {% for i in object_list.paginator.page_range %}
+                    {% if object_list.number == i %}
+                        <li class="active page-item disabled"><a class="page-link" href="#">{{ i }}</a></li>
+                    {% elif i > object_list.number|add:'-2' and i < object_list.number|add:'2' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+        
+                {% if object_list.paginator.num_pages > object_list.number|add:'1' %}
+                    <li class="page-item disabled"><a class="page-link" href="#">&hellip;</a></li>
+                {% endif %}
+        
+                <li class="page-item {% if not object_list.has_next %} disabled {% endif %}">
+                    <a class="page-link" href="?page={{ object_list.next_page_number }}">Keyingi</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+    </div>
+    
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#exportSearched").click(function(){
+                $(".table").table2excel({
+                    exclude: ".noExl",
+                    name: "Qidirilgan malumotlar",
+                    filename: `Qidirilgan_malumot---${new Date()}`,
+                    fileext: '.xls',
+                    exclude_links : true,
+                    sheetName: "Open Data",
+                })
+            })
+        });
+        const toshvil = document.getElementById("toshvil").getContext("2d");
+        const vilChart = new Chart(toshvil, {
+            type: 'bar',
+            data: {
+                labels : ['OTM bitiruvchilari', 'Professional ta\'lim bitiruvchilari', 'Maktab bitiruvchilari'],
+                datasets : [{
+                    label: '',
+                    axis: 'y',
+                    data: ['{{ unb }}', '{{ kjb }}', '{{ mkb }}'],
+                    fill: false,
+                    backgroundColor: [
+                        'rgba(5, 140, 145, 0.47)',
+                        'rgba(9, 57, 142, 0.45)',
+                        'rgba(8, 140, 78, 0.5)',
+                    ],
+                    borderColor: [
+                        'rgba(5, 140, 145, 1)',
+                        'rgba(9, 57, 142, 1)',
+                        'rgba(8, 140, 78, 1)',
+                    ],
+                    borderWidth: 1,
+                    hoverOffset: 10,
+                }]
+            },
+            options: {
+                scales:{
+                    y:{
+                        beginAtZone :true,
+                    },
+                    x:{
+                        grid:{
+                            offset: true,
+                        },
+                    }
+                }
+            }
+        })
+    </script>
+{% endblock %}

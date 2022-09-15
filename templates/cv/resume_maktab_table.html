@@ -1,0 +1,164 @@
+{% extends "main.html" %}
+
+{% block title %}
+    {{ object.f_name }}
+{% endblock title %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb" class="sticky-top bg-light">
+    <ol class="breadcrumb p-3">
+      <li class="breadcrumb-item"><a href="{% url 'M' %}">Ortga qaytish</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ object }}ning Resumesi</li>
+    </ol>
+</nav>
+<div class="row">
+    <div class="shadow_light col-xxl-5 m-auto p-5 border border-info">
+        <div class="img-name">
+            <div class="img border-end border-info pt-3">
+                <img src="{{ object.img.url }}" width="100" alt="">
+                <div class="my-5"></div>
+                <div class="imkonyat">
+                    <h3>Imkonyatlari</h3>
+                    <ul>
+                        {% for i in object.imkonyat.all %}  
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Chet tillari</h3>
+                    <ul>
+                        {% for i in object.chettili.all %}  
+                            <li>{{ i }}</li>
+                        {% endfor %}
+                    </ul>
+                    <h3>Biznes G'oya</h3>
+                    <ul>
+                        <li>{{ object.idea }}</li>
+                    </ul>
+                    <h3>Qiziqishlari</h3>
+                    <ul>
+                        <li>
+                            {{ object.qiziqish }}
+                        </li>
+                    </ul>
+                    <h3>Yoqtirgan Sport turi</h3>
+                    <ul>
+                        {% for i in object.sport.all %}
+                            <li>{{ i }}</li>
+                        {% empty %}
+                            <li>malumot mavjud emas</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="name">
+                <div class="user-name">
+                    <h1 class="ism">{{ object.f_name }}</h1>
+                </div>
+                <div class="data">
+                    <h3>Shaxsiy malumotlar</h3>
+                    <table class="table">
+                        <tr>
+                            <th>Tug'ulgan sana: </th>
+                            {% if object.t_sana %}
+                                <td>{{ object.t_sana }}</td>
+                            {% else %}
+                                <td>Mavjud emas</td>  
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>Yashash manzili: </th>
+                            {% if object.uy %}  
+                                <td class="ps-1"> {{ object.tuman }} {{ object.mahalla }} {{ object.uy }}</td>
+                            {% else %}
+                                <td class="ps-1"> {{ object.tuman }} {{ object.mahalla }}</td>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>Jins</th>
+                            <td>{{ object.jins }}</td>
+                        </tr> 
+                        <tr>
+                            <th>Telefon raqami: </th>
+                            <td>(+998) {{ object.phone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email: </th>
+                            {% if object.email %}  
+                                <td>{{ object.email }}</td>
+                            {% else %}
+                                <td>Mavjud emas</td>
+                            {% endif %}
+                        </tr>
+                    </table>
+                    <div class="my-5"></div>
+                    <div class="info-data">
+                    <h3 class="">
+                        Ta'lim
+                    </h3>
+                    {% if object.tuman_mk %}                          
+                        <p>
+                            Toshkent viloyati {{ object.tuman_mk }} {{ object.maktab }} {{ object.sinf }}
+                        </p>
+                    {% else %}
+                        <p>
+                            Toshkent viloyati {{ object.tuman }} {{ object.maktab }}ning {{ object.sinf }}
+                        </p>
+                    {% endif %}
+                    <h3>Topshirgan OTM nomi</h3>
+                    {% if object.univer_sity %}   
+                        <p>
+                            {{ object.univer_sity }}
+                        </p>
+                    {% elif object.otm_name %}
+                        <p>
+                            {{ object.vil }}ning {{ object.otm_name }} --- {{ object.stu_way_un }}
+                        </p>
+                    {% elif object.other_un %}
+                        <p>
+                            {{ object.other_un }}
+                        </p>
+                    {% else %}
+                        <p>
+                            Oliy ta'lim ga topshirmagan
+                        </p>
+                    {% endif %}
+                    
+                    {% if object.short_f %}
+                        <h3>Biznes g'oya haqida ozroq</h3>
+                        <p>
+                            {{ object.short_f }}
+                        </p>  
+                    {% endif %}
+                        <h3>Fuqoro xaqida</h3>
+                        <p>
+                        {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
+                        {{ object.maktab }}ning {{ object.sinf }} bituruvchisi. 
+                        {% if object.univer_sity %}  
+                            Hozirda "{{ object.univer_sity }}" ga topshirgan.
+                        {% elif object.otm_name %}
+                            Hozirda "{{ object.otm_name }}" ga topshirgan.
+                        {% elif object.other_un %}
+                            Hozirda "{{ object.other_un }}" ga topshirgan.
+                        {% else %}
+                            Hech qaysi OTMga topshirmagan 
+                        {% endif %} 
+                        {% if object.idea == 'Bor' %}  
+                            O'zini biznes g'oyasi bor
+                        {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+

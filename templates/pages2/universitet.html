@@ -1,0 +1,134 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}
+    {{ un }}
+{% endblock %}
+{% block content %}
+    <div class="background">
+        {% include "../widgets/sidebar.html" %}
+        <div class="main">
+            <div class="chart">
+                <h1>Bu yilgi  bitiruvchilar " {{ un }} " misolida</h1>
+                <canvas id="maktab"></canvas>
+            </div>
+            <div class="jadval my-5">
+                <table class="table table-gray ">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>№</th>
+                            <th>F.I.SH</th>
+                            <th>Telefon raqami</th>
+                            <th>Tug'ulgan joyi</th>
+                            <th>Tug'ulgan sana</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in object_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
+                                <td>(+998) {{ i.phone }}</td>
+                                <td>{{ i.tuman }}  {{ i.mahalla }}</td>
+                                <td>{{ i.t_sana }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <th>Hozirda talabalar yoq! Malumotlarni to'ldirish kerak <a href="{% url 'UBA' %}">link</a></th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if object_list.has_other_pages %}
+                <nav class="notShadow py-4 my-3">
+                    <ul class="pagination justify-content-center">
+                        {% if object_list.has_previous %}                      
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ object_list.previous_page_number }}">Ortga</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="">Ortga</a>
+                            </li>
+                        {% endif %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1">Birinchi sahifa</a>
+                        </li>
+                
+                        {% if object_list.number|add:'-1' > 1 %}
+                            <li class="page-item disabled"><a class="page-link">&hellip;</a></li>
+                        {% endif %}
+                
+                        {% for i in object_list.paginator.page_range %}
+                            {% if object_list.number == i %}
+                                <li class="active page-item disabled"><a class="page-link" href="#">{{ i }}</a></li>
+                            {% elif i > object_list.number|add:'-2' and i < object_list.number|add:'2' %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                
+                        {% if object_list.paginator.num_pages > object_list.number|add:'1' %}
+                            <li class="page-item disabled"><a class="page-link" href="#">&hellip;</a></li>
+                        {% endif %}
+                
+                        <li class="page-item {% if not object_list.has_next %} disabled {% endif %}">
+                            <a class="page-link" href="?page={{ object_list.next_page_number }}">Keyingi</a>
+                        </li>
+                    </ul>
+                </nav>
+            {% endif %}
+            <div class="tumanlar">
+                <h1>Barcha ta'lim muassasalari</h1>
+                <ul id="tuman">
+                    {% for i in all_mk %}
+                        <li><a href="{% url 'S' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
+                    {% for i in all_kj %}
+                        <li><a href="{% url 'KD' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
+                    {% for i in all_un %}
+                        <li><a href="{% url 'UB' pk=i.pk %}">{{ i }}</a></li>
+                    {% endfor %}
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script>
+        const maktab = document.getElementById("maktab").getContext("2d");
+        const maktabChart = new Chart(maktab, {
+            type: 'bar',
+            data: {
+                labels : ['O\'g\'il bolalar', 'qiz bolalar'],
+                datasets : [{
+                    label: '',
+                    data: ['{{ boys }}', '{{ grils }}'],
+                    fill: false,
+                    backgroundColor: [
+                        'rgba(5, 140, 145, 0.47)', 
+                        'rgba(9, 57, 142, 0.45)',
+                        // 'rgba(8, 140, 78, 0.5)',
+                        // 'rgba(8, 140, 78, 0.5)',
+                    ],
+                    borderColor: [
+                        'rgba(5, 140, 145, 1)',
+                        'rgba(9, 57, 142, 1)',
+                        // 'rgba(8, 140, 78, 1)',
+                        // 'rgba(8, 140, 78, 1)',
+                    ],
+                    borderWidth: 1,
+                    hoverOffset: 10,
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                scales:{
+                    y:{
+                        beginAtZone :true
+                    }
+                }
+            }
+        })
+    </script>
+{% endblock %}

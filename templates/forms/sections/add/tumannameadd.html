@@ -1,0 +1,35 @@
+{% extends "../../../main.html" %}
+
+{% block title %}
+    Yangi Tuman
+{% endblock title %}
+
+{% block content %}
+    {% include "../../../widgets/form.html" %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-12 m-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Hudud Nomi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in object_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ m }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center">Afsuski hozircha malumotlar mavjud emas</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
