@@ -5,5 +5,33 @@
 {% endblock title %}
 
 {% block content %}
-    {% include "../../widgets/form.html" %}
+    {% include "../../widgets/form.html" %} 
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-xl-12 col-xxl-12 m-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Qo'shilgan vaqti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for m in object_list %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ m.username }}</td>
+                                <td>{{ m.joined_date }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="3" class="text-center">Afsuski hozircha malumotlar mavjud emas</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock content %}

@@ -1,5 +1,5 @@
 body{
-    overflow-x: hidden;
+    overflow-x: hidden; 
 }
 /* body::-webkit-scrollbar{
     display: none;
@@ -345,6 +345,7 @@ th, td{
 }
 .search-box{
     width: 100%;
+    margin-top: 50px;
     display: inline-flex;
     justify-content: end;
 }
@@ -361,6 +362,17 @@ th, td{
 }
 .hidden2{
     display: none;
+}
+.marquee_alert{
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+    position: fixed;
+    background-color: #3F4C5C;
+}
+.marquee_alert p{
+    color: #FFF;
+    padding: 8px 0 6px 0;
 }
 @media only screen and (max-width: 1200px){
     .tumanlar ul {

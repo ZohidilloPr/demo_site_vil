@@ -15,6 +15,7 @@ Users = get_user_model()
 
 def RegisterUser(request):
     form = RegisterUserForm
+    users = Users.objects.all()
     if request.method == "POST":
         form = RegisterUser(request.POST)
         if form.is_valid:
@@ -22,6 +23,7 @@ def RegisterUser(request):
             return redirect("users:RUF")
     return render(request, "users/register/register.html", context={
         'form':form,
+        'object_list':users
     })
 
 class RegisterUser(LoginRequiredMixin, CreateView, SuccessMessageMixin):
@@ -32,6 +34,10 @@ class RegisterUser(LoginRequiredMixin, CreateView, SuccessMessageMixin):
     template_name = "users/register/register.html"
     success_url = reverse_lazy("users:RUF")
     success_message = 'Yangi Foydalanuvchi muaffaqiyatli qo\'shildi'
+
+    def get_context_data(self, **kwargs):
+        kwargs['object_list'] = Users.objects.all().order_by('-joined_date')
+        return super().get_context_data(**kwargs)
 
 def LOGIN(request):
     if request.method == "POST":

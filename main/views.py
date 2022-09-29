@@ -495,10 +495,11 @@ def UniversitetAdd(request):
         
     form = UniversitetForm
     return render(request, 'forms/add/universitetAdd.html', {"form":form})
-    
+
+#C:\Users\MarkazPC\Desktop\Zohidillo\3_\demo_site\main\views.py    
 
 class MaktabNameAddView(SuccessMessageMixin, CreateView):
-    model = MK
+    model = MK 
     template_name = 'forms/sections/add/maktabnameadd.html'
     form_class = MaktabNameForm
     success_message = 'Yangi maktab muaffaqiyatli qo\'shildi!'
