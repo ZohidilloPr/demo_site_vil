@@ -1,2 +1,2 @@
 # demo_site
-for heroku
+for server
