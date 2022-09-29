@@ -111,9 +111,6 @@ class MaktabForm(forms.ModelForm):
                 'class':'form-control w-50',
                 'placeholder':'Boshqa OTM'
             }),
-            'maqsad':forms.Select(attrs={
-                'class':'form-select'
-            }),
             'sinf':forms.Select(attrs={
                 'class':'form-select'
             })
