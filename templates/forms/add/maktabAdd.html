@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="id_tuman" class="mb-1">Topshirmoqchi bolgan OTM</label>
+                <label for="otm_name" class="mb-1">Topshirmoqchi bolgan OTM</label>
                 <div class="input-group mb-3">
                     {{ form.vil }}
                     {{ form.otm_name }}
@@ -101,9 +101,9 @@
             $("#id_chettili").chosen();
         })
         $(function(){
-            $("#id_t_sana_day option:selected").html("Kun");
-            $("#id_t_sana_month option:selected").html("Oy");
-            $("#id_t_sana_year option:selected").html("Yil");
+            $("#id_t_sana_day option:first").html("Kun");
+            $("#id_t_sana_month option:first").html("Oy");
+            $("#id_t_sana_year option:first").html("Yil");
         });
         $("#id_idea").change(function(){
             const idea = $(this).val()

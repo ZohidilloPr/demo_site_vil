@@ -142,15 +142,15 @@ class MaktabForm(forms.ModelForm):
         elif self.instance.pk:
             self.fields['maktab'].queryset = self.instance.tuman.maktab_set.all()
 
-        # if 'vil' in self.data:
-        #     try: 
-        #         vil_id = int(self.data.get('vil'))
-        #         print("forms.py ", vil_id)
-        #         self.fields['otm_name'].queryset = Universitet.objects.filter(viloyat_id=vil_id).all()
-        #     except (ValueError, TypeError):
-        #         pass
-        # elif self.instance.pk:
-        #     self.fields['otm_name'].queryset = self.instance.vil.universitet_set.all()
+        if 'vil' in self.data:
+            try: 
+                vil_id = int(self.data.get('vil'))
+                print("forms.py ", vil_id)
+                self.fields['otm_name'].queryset = Universitet.objects.filter(viloyat_id=vil_id).all()
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['otm_name'].queryset = self.instance.vil.universitet_set.all()
 
 
 

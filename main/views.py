@@ -357,7 +357,7 @@ class TableList(ListView):
     template_name = 'index2.html'
 
 def Maktab(request):
-    mk = MaktabBitiruvchisi.objects.filter(add_time__year=this_year)
+    mk = MaktabBitiruvchisi.objects.filter(add_time__year=this_year).order_by('-add_time')
     mkFilter = MaktabFilter(request.GET, queryset=mk)
     mk = mkFilter.qs
     page = request.GET.get('page', 1)
@@ -375,7 +375,7 @@ def Maktab(request):
     })
 
 def Kollej(request):
-    kj = KollejBitiruvchisi.objects.filter(add_time__year=this_year)
+    kj = KollejBitiruvchisi.objects.filter(add_time__year=this_year).order_by('-add_time')
     kjFilter = KollejFilter(request.GET, queryset=kj)
     kj=kjFilter.qs
     page = request.GET.get('page', 1)
@@ -496,7 +496,7 @@ def UniversitetAdd(request):
     form = UniversitetForm
     return render(request, 'forms/add/universitetAdd.html', {"form":form})
 
-#C:\Users\MarkazPC\Desktop\Zohidillo\3_\demo_site\main\views.py    
+# C:\Users\MarkazPC\Desktop\Zohidillo\3_\demo_site\main\views.py    
 
 class MaktabNameAddView(SuccessMessageMixin, CreateView):
     model = MK 
