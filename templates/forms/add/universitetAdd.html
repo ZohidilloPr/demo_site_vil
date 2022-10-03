@@ -103,9 +103,9 @@
         $(function(){
             $('input').addClass("form-control");
             $('select').addClass("form-select");
-            $("#id_t_sana_day option:selected").html("Kun");
-            $("#id_t_sana_month option:selected").html("Oy");
-            $("#id_t_sana_year option:selected").html("Yil");
+            $("#id_t_sana_day option:first").html("Kun");
+            $("#id_t_sana_month option:first").html("Oy");
+            $("#id_t_sana_year option:first").html("Yil");
         });
         $("#id_idea").change(function(){
             const idea = $(this).val()
