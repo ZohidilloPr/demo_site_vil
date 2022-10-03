@@ -73,11 +73,6 @@ def simple(request):
         'object_list': post,
     })
 
-# class simple(ListView):
-#     model = Bitiruvchi
-#     paginate_by = 100
-#     ordering = '-add_time'
-#     template_name = 'simple.html'
 
 # diagramm section
 def Home(request):
@@ -106,6 +101,7 @@ def SearchAllStudents(request):
             Q(kollejbitiruvchisi__stu_way__icontains=query) |
             Q(universitetbitiruvchisi__stu_way__icontains=query) 
         ).order_by("f_name")
+        
     else:
         queryset = Bitiruvchi.objects.filter(add_time__year=this_year).order_by('f_name') 
     page = request.GET.get('page', 1)
