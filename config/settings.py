@@ -182,11 +182,13 @@ AUTH_USER_MODEL = "users.Users"
 
 
 STATIC_URL = 'static/'
+# STATIC_URL = '/home/zohidillo/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/')
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+# STATIC_ROOT = '/home/zohidillo/static/'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
