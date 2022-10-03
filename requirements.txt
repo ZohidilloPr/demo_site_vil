@@ -12,14 +12,15 @@ djangorestframework==3.13.1
 djangorestframework-datatables==0.7.0
 et-xmlfile==1.1.0
 Faker==14.1.0
+gunicorn==20.1.0
 Markdown==3.4.1
 MarkupPy==1.14
-mysqlclient==2.1.1
 numpy==1.23.2
 odfpy==1.4.1
 openpyxl==3.0.10
 pandas==1.4.3
 Pillow==9.2.0
+psycopg2-binary==2.9.3
 python-dateutil==2.8.2
 pytz==2022.2.1
 PyYAML==6.0
