@@ -44,14 +44,7 @@
                                 {{ object.qiziqish }}
                             </li>
                         </ul>
-                        <h3>Yoqtirgan Sport turi</h3>
-                        <ul>
-                            {% for i in object.sport.all %}
-                                <li>{{ i }}</li>
-                            {% empty %}
-                                <li>malumot mavjud emas</li>
-                            {% endfor %}
-                        </ul>
+                        
                     </div>
                 </div>
                 <div class="name">
@@ -133,8 +126,16 @@
                                 {{ object.short_f }}
                             </p>  
                         {% endif %}
-                            <h3>Fuqoro xaqida</h3>
-                            <p>
+                        <h3>Yoqtirgan Sport turi</h3>
+                        <ul>
+                            {% for i in object.sport.all %}
+                                <li>{{ i }}</li>
+                            {% empty %}
+                                <li>malumot mavjud emas</li>
+                            {% endfor %}
+                        </ul>
+                        <h3>Fuqoro xaqida</h3>
+                        <p>
                             {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
                             {{ object.maktabbitiruvchisi.maktab }}ning {{ object.maktabbitiruvchisi.sinf }} bituruvchisi. 
                             {% if object.maktabbitiruvchisi.univer_sity %}  
@@ -149,7 +150,7 @@
                             {% if object.idea == 'Bor' %}  
                                 O'zini biznes g'oyasi bor
                             {% endif %}
-                            </p>
+                        </p>
                         </div>
                     </div>
                 </div>
@@ -195,14 +196,7 @@
                         <p>
                             {{ object.qiziqish }}
                         </p>
-                        <h3>Yoqtirgan Sport turi</h3>
-                        <ul>
-                            {% for i in object.sport.all %}
-                                <li>{{ i }}</li>
-                            {% empty %}
-                                <li>malumot mavjud emas</li>
-                            {% endfor %}
-                        </ul>
+                        
                     </div>
                 </div>
                 <div class="name">
@@ -289,6 +283,14 @@
                                 {{ object.short_f }}
                             </p>  
                         {% endif %}
+                        <h3>Yoqtirgan Sport turi</h3>
+                        <ul>
+                            {% for i in object.sport.all %}
+                                <li>{{ i }}</li>
+                            {% empty %}
+                                <li>malumot mavjud emas</li>
+                            {% endfor %}
+                        </ul>
                         <h3>Fuqoro xaqida</h3>
                         <p>
                             {{ object.f_name }} Toshkent vilotati {{ object.tuman }}da tug'ulgan.
