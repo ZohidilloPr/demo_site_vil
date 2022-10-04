@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import login, authenticate, logout
@@ -58,3 +59,12 @@ def LOGOUT(request):
     logout(request)
     messages.info(request, "Akkountdan chiqildi!")
     return redirect("users:LG")
+
+class EditUser(LoginRequiredMixin, UpdateView, SuccessMessageMixin):
+    login_url = ''
+    login_redirect_field = reverse_lazy("users:LG")
+    model = Users
+    fields = ['full_name', 'username', 'phone_number', 'staff', 'data_add', 'data_viewer']
+    template_name = "users/edit/edit.html"
+    success_url = reverse_lazy("users:RUF")
+    success_message = 'Foydalanuvchi muaffaqiyatli taxrirlandi'

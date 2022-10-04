@@ -72,8 +72,7 @@
                             <th>№</th>
                             <th>F.I.SH</th>
                             <th>Telefon raqami</th>
-                            <th>Tug'ulgan joyi</th>
-                            <th>Topshirgan OTM nomi</th>
+                            <th>Yashash manzili</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -83,7 +82,6 @@
                                 <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>(+998) {{ i.phone }}</td>
                                 <td>{{ i.tuman }} {{ i.mahalla }}</td>
-                                <td>{{ i.univer_sity }}</td>
                             </tr>
                         {% empty %}
                             <tr>
@@ -139,14 +137,15 @@
         const maktabChart = new Chart(maktab, {
             type: 'bar',
             data: {
-                labels : ['O\'g\'il bolalar', 'qiz bolalar'],
+                labels : ['O\'g\'il bolalar', 'Qiz bolalar'],
                 datasets : [{
                     label: '',
                     data: ['{{ boys }}', '{{ grils }}'],
                     fill: false,
                     backgroundColor: [
-                        'rgba(5, 140, 145, 0.47)', 
-                        'rgba(9, 57, 142, 0.45)',
+                        'rgba(5, 140, 145, 0.47)',
+                        '#ff9999' 
+                        // 'rgba(9, 57, 142, 0.45)',
                         // 'rgba(8, 140, 78, 0.5)',
                         // 'rgba(8, 140, 78, 0.5)',
                     ],

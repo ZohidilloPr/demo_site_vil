@@ -9,6 +9,7 @@ from .views import (
     Schools,
     DataAdd,
     TableList,
+    UpdateKollejName,
     load_otm,
     MaktabADD, 
     OTM_Enter,
@@ -91,6 +92,9 @@ urlpatterns = [
     path("bitiruvchilar/kollej/taxrirlash/<pk>/", EditKollejBitiruvchi.as_view(), name="EKB"),
     
     path("bitiruvchilar/simple/", simple, name="SIMPLE"),
+    
+    #update
+    path("data/new/add/kollej/<pk>/", UpdateKollejName.as_view(), name="UKNAV"),
 
     # export section
     path("bitiruvchilar/export/excel/all", export_excel_table, name="export_table"),

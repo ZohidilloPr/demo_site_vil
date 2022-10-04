@@ -143,7 +143,7 @@
         const maktabChart = new Chart(maktab, {
             type: 'bar',
             data: {
-                labels : ['O\'g\'il bolalar', 'qiz bolalar', 'Kasb hunar maktab', 'Texnikom', 'Akademik litsey'],
+                labels : ['O\'g\'il bolalar', 'Qiz bolalar', 'Kasb hunar maktab', 'Texnikom', 'Akademik litsey'],
                 datasets : [{
                     label: '',
                     data: ['{{ boys }}', '{{ grils }}', '{{ count_0 }}','{{ count_1 }}','{{ count_2 }}',],
@@ -151,12 +151,13 @@
                     backgroundColor: [
                         'rgba(5, 140, 145, 0.47)', 
                         'rgba(255, 132, 145, 0.47)',
-                        // 'rgba(8, 140, 78, 0.5)',
+                        'rgba(8, 140, 78, 0.5)',
+                        '#315dc4'
                         // 'rgba(8, 140, 78, 0.5)',
                     ],
                     borderColor: [
-                        'rgba(5, 140, 145, 1)',
-                        'rgba(255, 132, 145, 1)',
+                        // 'rgba(5, 140, 145, 1)',
+                        // 'rgba(255, 132, 145, 1)',
                         // 'rgba(8, 140, 78, 1)',
                         // 'rgba(8, 140, 78, 1)',
                     ],

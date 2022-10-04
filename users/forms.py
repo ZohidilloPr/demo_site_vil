@@ -24,7 +24,7 @@ class RegisterUserForm(forms.ModelForm):
         password2 = cleaned_data.get("password2")
 
         if password2 is not None and password != password2:
-            raise forms.ValidationError("Parolni tasdiqlashda hatoliuk bo'lishi mumkun")
+            raise forms.ValidationError("Parolni tasdiqlashda xatolik bo'lishi mumkun")
         return cleaned_data
 
     def save(self, commit=True):
@@ -55,7 +55,7 @@ class UserAdminCreationForm(forms.ModelForm):
         password2 = cleaned_data.get("password2")
 
         if password2 is not None and password != password2:
-            raise forms.ValidationError("Parolni tasdiqlashda hatoliuk bo'lishi mumkun")
+            raise forms.ValidationError("Parolni tasdiqlashda xatolik bo'lishi mumkun")
         return cleaned_data
 
     def save(self, commit=True):

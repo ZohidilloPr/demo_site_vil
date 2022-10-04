@@ -62,8 +62,13 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td><a href="{% url 'RE' pk=i.pk %}">{{ i.f_name }}</a></td>
                                 <td>{{ i.tuman }} {{ i.mahalla }}</td>
-                                <td>{{ i.universiteT }}</td>
-                                <td></td>
+                                {% if i.universitet %}  
+                                    <td>{{ i.universitet }}</td>
+                                    <td>{{ i.stu_way }}</td>
+                                {% else %}
+                                    <td>{{ i.other_un }}</td>
+                                    <td>{{ i.stu_way_ch }}</td>
+                                {% endif %}
                             </tr>
                         {% empty %}
                             <tr>
@@ -119,15 +124,15 @@
         const maktabChart = new Chart(maktab, {
             type: 'bar',
             data: {
-                labels : ['O\'g\'il bolalar', 'qiz bolalar'],
+                labels : ['O\'g\'il bolalar', 'Qiz bolalar'],
                 datasets : [{
                     label: '',
                     data: ['{{ boys }}', '{{ grils }}'],
                     fill: false,
                     backgroundColor: [
                         'rgba(5, 140, 145, 0.47)', 
-                        'rgba(9, 57, 142, 0.45)',
-                        // 'rgba(8, 140, 78, 0.5)',
+                        'rgba(8, 140, 78, 0.5)',
+                        // 'rgba(9, 57, 142, 0.45)',
                         // 'rgba(8, 140, 78, 0.5)',
                     ],
                     borderColor: [

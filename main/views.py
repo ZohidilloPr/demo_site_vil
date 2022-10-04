@@ -514,7 +514,7 @@ class KollejNameAddView(SuccessMessageMixin, CreateView):
     success_message = 'Yangi kollej muaffaqiyatli qo\'shildi!'
 
     def get_context_data(self, **kwargs):
-        kwargs['object_list'] = KJ.objects.all().order_by('name')
+        kwargs['object_list'] = KJ.objects.all().order_by('-add_time')
         return super().get_context_data(**kwargs)
 
 class UniversitetNameAddView(SuccessMessageMixin, CreateView):
@@ -661,6 +661,13 @@ class DeleteBitiruvchi(DeleteView, SuccessMessageMixin):
     model = Bitiruvchi
     success_message = 'O\'chirish muaffaqiyatli bajarildi!'
     success_url = reverse_lazy("T")
+
+class UpdateKollejName(UpdateView, SuccessMessageMixin):
+    model = KJ
+    form_class = KollejNameForm
+    template_name = 'forms/edit/updatekollejname.html'
+    success_url = reverse_lazy("KNAV")
+    success_message = 'Taxrirlash muaffaqiyatli bajarildi!'
 
 
 # EXPORT SECTION
