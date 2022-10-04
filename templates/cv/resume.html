@@ -22,7 +22,7 @@
                     <img src="{{ object.img.url }}" width="100" alt="">
                     <div class="my-5"></div>
                     <div class="imkonyat">
-                        <h3>Imkonyatlari</h3>
+                        <h3>Imkoniyatlari</h3>
                         <ul>
                             {% for i in object.imkonyat.all %}  
                                 <li>{{ i }}</li>
@@ -59,7 +59,7 @@
                         <h1 class="ism">{{ object.f_name }}</h1>
                     </div>
                     <div class="data">
-                        <h3>Shaxsiy malumotlar</h3>
+                        <h3>Shaxsiy ma'lumotlar</h3>
                         <table class="table">
                             <tr>
                                 <th>Tug'ulgan sana: </th>
@@ -78,7 +78,7 @@
                                 {% endif %}
                             </tr>
                             <tr>
-                                <th>Jins</th>
+                                <th>Jinsi:</th>
                                 <td>{{ object.jins }}</td>
                             </tr> 
                             <tr>
@@ -86,7 +86,7 @@
                                 <td>(+998) {{ object.phone }}</td>
                             </tr>
                             <tr>
-                                <th>Email: </th>
+                                <th>E-Pochta: </th>
                                 {% if object.email %}  
                                     <td>{{ object.email }}</td>
                                 {% else %}
@@ -166,7 +166,7 @@
                     <img src="{{ object.img.url }}" width="100" alt="">
                     <div class="my-5"></div>
                     <div class="imkonyat">
-                        <h3>Imkonyatlari</h3>
+                        <h3>Imkoniyatlari</h3>
                         {{ object.abilty }}
                         <ul>
                             {% for i in object.imkonyat.all %}  
@@ -210,7 +210,7 @@
                         <h1 class="ism">{{ object.f_name }}</h1>
                     </div>
                     <div class="data">
-                        <h3>Shaxsiy malumotlar</h3>
+                        <h3>Shaxsiy ma'lumotlar</h3>
                         <table class="table">
                             <tr>
                                 <th>Tug'ulgan sana: </th>
@@ -229,7 +229,7 @@
                                 {% endif %}
                             </tr>
                             <tr>
-                                <th>Jins</th>
+                                <th>Jinsi:</th>
                                 <td>{{ object.jins }}</td>
                             </tr> 
                             <tr>
@@ -237,7 +237,7 @@
                                 <td>(+998) {{ object.phone }}</td>
                             </tr>
                             <tr>
-                                <th>Email: </th>
+                                <th>E-Pochta: </th>
                                 {% if object.email %}  
                                     <td>{{ object.email }}</td>
                                 {% else %}
@@ -320,7 +320,7 @@
                     <img src="{{ object.img.url }}" width="100" alt="">
                     <div class="my-5"></div>
                     <div class="imkonyat">
-                        <h3>Imkonyatlari</h3>
+                        <h3>Imkoniyatlari</h3>
                         <ul>
                             {% for i in object.imkonyat.all %}  
                                 <li>{{ i }}</li>
@@ -378,7 +378,7 @@
                                 <td>(+998) {{ object.phone }}</td>
                             </tr>
                             <tr>
-                                <th>Email: </th>
+                                <th>E-Pochta: </th>
                                 {% if object.email %}  
                                     <td>{{ object.email }}</td>
                                 {% else %}
