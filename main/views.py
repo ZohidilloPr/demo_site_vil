@@ -105,7 +105,7 @@ def SearchAllStudents(request):
     else:
         queryset = Bitiruvchi.objects.filter(add_time__year=this_year).order_by('f_name') 
     page = request.GET.get('page', 1)
-    paginator = Paginator(queryset, 100)
+    paginator = Paginator(queryset, 700)
 
     try:
         post = paginator.page(page)
@@ -331,7 +331,7 @@ def Table(request):
     all_student_filter = BitiruvchiFilter(request.GET, queryset=all_students)
     all_students = all_student_filter.qs 
     page = request.GET.get('page', 1)
-    paginator = Paginator(all_students, 50)
+    paginator = Paginator(all_students, 100)
 
     try:
         post = paginator.page(page)
