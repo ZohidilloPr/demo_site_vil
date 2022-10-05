@@ -46,7 +46,7 @@ def maktab_db(n):
     for i in tuman:
         for r in range(0, n):
             MK.objects.create(
-                name = random.randint(1, 90),
+                name = random.randint(3, 90),
                 tuman = TS.objects.get(id=i.id),
                 status = random.choice(["O'rta ta'lim maktabi", "O'rta ta'lim maktabi", "O'rta ta'lim maktabi", "Ixtisoslashgan maktablar"])
             )
@@ -55,7 +55,7 @@ def kollej_db(n):
     for i in tuman:
         for k in range(0, n):
             KJ.objects.create(
-                name = f"{random.randint(0, 15)}-sonli professanal ta'lim",
+                name = f"{random.randint(2, 18)}-sonli professanal ta'lim",
                 type = generater(tk),
                 tuman = tuman.get(id=i.id)
             )
@@ -82,7 +82,7 @@ def mk_db(n):
                     uy = fk.building_number(),
                     phone = f"{fk.msisdn()[:8]}",
                     email = fk.ascii_safe_email(),
-                    qiziqish = generater(qz),
+                    # qiziqish = generater(qz),
                     tuman_mk = tuman.get(id=m.tuman.id),
                     maktab = maktab.get(id=m.id),
                     sinf = random.choice(['9-sinf', '11-sinf', '11-sinf']),
@@ -90,6 +90,7 @@ def mk_db(n):
                     otm_name = generater(otm),
                     stu_way_un = fk.job(),
                 )
+                instance.qiziqish.set(qz)
                 instance.imkonyat.set(imkonyat)
                 instance.sport.set(Sp.objects.all())
                 instance.chettili.set(Fl.objects.all())
@@ -108,13 +109,14 @@ def kj_db(n):
                     uy = fk.building_number(),
                     phone = f"{fk.msisdn()[:8]}",
                     email = fk.ascii_safe_email(),
-                    qiziqish = generater(qz),
+                    # qiziqish = generater(qz),
                     maqsad = random.choice(["O'qishni davom etirmoqchi", "O'qishni davom etirmoqchi", "Ishlamoqchi"]),
                     type = generater(tk),
                     tuman_kj = tuman.get(id=m.tuman.id),
                     kollej = kollej.get(id=m.id),
                     stu_way = fk.job(),
                 )
+                instance.qiziqish.set(qz)
                 instance.imkonyat.set(imkonyat)
                 instance.sport.set(Sp.objects.all())
                 instance.chettili.set(Fl.objects.all())
@@ -135,12 +137,13 @@ def un_db(n):
                         uy = fk.building_number(),
                         phone = f"{fk.msisdn()[:8]}",
                         email = fk.ascii_safe_email(),
-                        qiziqish = generater(qz),
+                        # qiziqish = generater(qz),
                         maqsad = random.choice(["O'qishni davom etirmoqchi", "O'qishni davom etirmoqchi", "Ishlamoqchi"]),
                         vil = vil_.get(id=m.viloyat.id),
                         universitet = otm.get(id=m.id),
                         stu_way = fk.job(),
                     )
+                    instance.qiziqish.set(qz)
                     instance.imkonyat.set(imkonyat)
                     instance.sport.set(Sp.objects.all())
                     instance.chettili.set(Fl.objects.all())

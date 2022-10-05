@@ -36,6 +36,11 @@ type_school = (
     ("O'rta ta'lim maktabi", "O'rta ta'lim maktabi"),
     ("Ixtisoslashgan maktablar", "Ixtisoslashgan maktablar"),
 )
+vil_status = (
+    ("shaxar", "shaxar"),
+    ("viloyati", "viloyati"),
+    ("respublikasi", "respublikasi")
+)
 
 class AutoTime(models.Model):
     """ Barcha classlarda bor asosiy xususiyatlar """
@@ -86,9 +91,10 @@ class Kollej(AutoTime):
 
 class Vil(AutoTime):
     """ Viloyatlar nomi """
+    status = models.CharField(max_length=l, default="viloyati", choices=vil_status, blank=True, null=True)
     
     def __str__(self):
-        return super().__str__()
+        return f"{super().__str__()} {self.status}"
 
 class Universitet(AutoTime):
     """ Yangi OTM nomi qo'shish """
@@ -137,7 +143,7 @@ class Bitiruvchi(models.Model):
     phone = models.CharField(max_length=9, verbose_name="Telefon raqam (+998) ", null=True, blank=True)
     email = models.EmailField(max_length=l, verbose_name="E-Pochta", null=True, blank=True)
     imkonyat = models.ManyToManyField(Imkonyat, related_name="abilty", verbose_name="Kompyuter bilimi")
-    qiziqish = models.ForeignKey(Qiziqish, related_name="interest", on_delete=models.CASCADE, verbose_name="Qiziqish")
+    qiziqish = models.ManyToManyField(Qiziqish, related_name="interest", verbose_name="Qiziqish")
     sport = models.ManyToManyField(Sport, related_name="sport", verbose_name="Qiziqadigan sport turi")
     chettili = models.ManyToManyField(ChetTili, related_name="f_lang")
     idea = models.CharField(verbose_name="Biznes g'oya", max_length=l, choices=yesNo, default="Yoq")

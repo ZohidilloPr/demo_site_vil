@@ -53,7 +53,7 @@ class MaktabForm(forms.ModelForm):
             'imkonyat':forms.SelectMultiple(attrs={
                 'class':'form-control',
             }),
-            'qiziqish':forms.Select(attrs={
+            'qiziqish':forms.SelectMultiple(attrs={
                 'class':'form-control',
             }),
             'chettili':forms.SelectMultiple(),
@@ -188,7 +188,7 @@ class KollejForm(forms.ModelForm):
             'imkonyat':forms.SelectMultiple(attrs={
                 'class':'form-control',
             }),
-            'qiziqish':forms.Select(attrs={
+            'qiziqish':forms.SelectMultiple(attrs={
                 'class':'form-control',
             }),
             'chettili':forms.CheckboxSelectMultiple(),
@@ -302,7 +302,7 @@ class UniversitetForm(forms.ModelForm):
             'imkonyat':forms.SelectMultiple(attrs={
                 'class':'form-control',
             }),
-            'qiziqish':forms.Select(attrs={
+            'qiziqish':forms.SelectMultiple(attrs={
                 'class':'form-control',
             }),
             'chettili':forms.SelectMultiple(attrs={
