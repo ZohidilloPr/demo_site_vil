@@ -68,3 +68,12 @@ class EditUser(LoginRequiredMixin, UpdateView, SuccessMessageMixin):
     template_name = "users/edit/edit.html"
     success_url = reverse_lazy("users:RUF")
     success_message = 'Foydalanuvchi muaffaqiyatli taxrirlandi'
+
+def ChangePassword(request, pk):
+    user = Users.objects.get(pk=pk)
+    password = request.GET.get('password')
+    password1 = request.GET.get('password1')
+    if password == password1:
+        user.set_password(password)
+        user.save()
+    return render(request, 'users/edit/password.html', {'user':user})

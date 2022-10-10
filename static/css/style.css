@@ -7,6 +7,9 @@ body{
 /* .hidden-over{
     overflow-y: hidden;
 } */
+.y-scroll{
+    overflow-y: hidden;
+}
 .notShadow{
     box-shadow: none;
 }
@@ -375,6 +378,14 @@ th, td{
 .marquee_alert p{
     color: #FFF;
     padding: 8px 0 6px 0;
+}
+.total{
+    margin-top: -15px;
+    color: #3F4C5C;
+}
+.total span{
+    font-size: 30px;
+    margin-left: 10px;
 }
 @media only screen and (max-width: 1200px){
     .tumanlar ul {

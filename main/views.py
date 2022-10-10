@@ -79,10 +79,12 @@ def Home(request):
     mkb = MaktabBitiruvchisi.objects.filter(add_time__year=this_year).count()
     kjb = KollejBitiruvchisi.objects.filter(add_time__year=this_year).count()
     unb = UniversitetBitiruvchisi.objects.filter(add_time__year=this_year).count()
+    total_num = Bitiruvchi.objects.filter(add_time__year=this_year).count()
     return render(request, 'base.html', {
         'mkb':mkb,
         'kjb':kjb,
         'unb':unb,
+        'total':total_num,
     })
 def SearchAllStudents(request):
     mkb = MaktabBitiruvchisi.objects.filter(add_time__year=this_year).count()
@@ -126,6 +128,7 @@ def Districts(request, pk):
     kollej_all = KJ.objects.filter(tuman_id=pk)
     all_d = TumanVaShahar.objects.all().order_by('name')
     typeKol = TypeKollej.objects.all()
+    total_num = Bitiruvchi.objects.filter(tuman=pk, add_time__year=this_year).count()
     mkb = MaktabBitiruvchisi.objects.filter(tuman_id=pk, add_time__year=this_year).count()
     kjb = KollejBitiruvchisi.objects.filter(tuman_id=pk, add_time__year=this_year).count()
     unb = UniversitetBitiruvchisi.objects.filter(tuman_id=pk, add_time__year=this_year).count()
@@ -145,10 +148,11 @@ def Districts(request, pk):
         'mkb':mkb,
         'unb':unb,
         'kjb':kjb,
-        'object_list':post,
         'all_d':all_d,
         'maktab':maktab,
         'typeK': typeKol,
+        'total':total_num,
+        'object_list':post,
         'all_kj':kollej_all,
     })    
 
@@ -163,6 +167,7 @@ def Schools(request, pk):
     gra_11 = MaktabBitiruvchisi.objects.filter(maktab=pk, sinf="11-sinf", add_time__year=this_year).count()
     grils = MaktabBitiruvchisi.objects.filter(maktab=pk, jins="qiz bola", add_time__year=this_year).count()
     boys = MaktabBitiruvchisi.objects.filter(maktab=pk, jins="o'g'il bola", add_time__year=this_year).count()
+    total_num = Bitiruvchi.objects.filter(tuman=tuman_pk, maktabbitiruvchisi__maktab=maktab, add_time__year=this_year).count()
     page = request.GET.get('page', 1)
     paginator = Paginator(student, 100)
 
@@ -180,6 +185,7 @@ def Schools(request, pk):
         'all_d': all_d,
         'gra_9': gra_9,
         'gra_11': gra_11,
+        'total':total_num,
         'object_list':post,
         'all_mk':maktab_all,
         'all_kj': kollej_all,
@@ -188,6 +194,7 @@ def Schools(request, pk):
 def AllKollejBit(request, pk):
     all_types = TypeKollej.objects.all()
     kollej_all_stu = KollejBitiruvchisi.objects.filter(tuman=pk, add_time__year=this_year)
+    total_num = KollejBitiruvchisi.objects.filter(tuman=pk, add_time__year=this_year).count()
     tuman_id = kollej_all_stu[0].tuman.pk
     kj = KJ.objects.filter(tuman_id=tuman_id)
     maktab_all = MK.objects.filter(tuman_id=tuman_id)
@@ -214,6 +221,7 @@ def AllKollejBit(request, pk):
         'boys': boys,
         'grils': grils,
         'all_d': all_d,
+        'total':total_num,
         'object_list':post,
         'tuman_id':tuman_id,
         'all_mk':maktab_all,
@@ -226,6 +234,7 @@ def AllKollejBit(request, pk):
 
 def OTM_all_stu(request, pk):
     otm_all_stu = UniversitetBitiruvchisi.objects.filter(tuman=pk, add_time__year=this_year)
+    total_num = UniversitetBitiruvchisi.objects.filter(tuman=pk, add_time__year=this_year).count()
     tuman_id = otm_all_stu[0].tuman.pk
     maktab_all = MK.objects.filter(tuman_id=tuman_id)
     all_d = TumanVaShahar.objects.all().order_by('name')
@@ -247,6 +256,7 @@ def OTM_all_stu(request, pk):
         'grils': grils,
         'all_d': all_d,
         'kas':otm_all_stu,
+        'total':total_num,
         'object_list':post,
         'all_mk':maktab_all,
         'tuman_id':tuman_id,

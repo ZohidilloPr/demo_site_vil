@@ -17,7 +17,7 @@
                         </a>
                         <ol class="dropdown-menu w-100">
                             {% for i in all_d %}
-                            <li><a class="dropdown-item a-link" href="">{{ i }}</a></li>
+                            <li><a class="dropdown-item a-link" href="{% url 'D' pk=i.pk %}">{{ i }}</a></li>
                             {% endfor %}
                         </ol>
                     </div>
@@ -43,6 +43,7 @@
             </ul>
             <div class="chart mt-5">
                 <h1>Bu yilgi bitiruvchilar {{ d }} misolida</h1>
+                <h4 class="total">Umumiy bitiruvchilar soni <span>{{ total }}</span></h4>
                 <canvas id="tumanChart"></canvas>
             </div>
             <br>
